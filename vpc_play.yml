@@ -3,7 +3,7 @@
   gather_facts: False
   tasks:
     - name: Add variable to playbook
-      include_var: vpc_setup
+      include_vars: vpc_setup
         
     - name: Create vpc
       ec2_vpc_net:
