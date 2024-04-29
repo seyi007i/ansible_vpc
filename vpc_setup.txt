@@ -1,0 +1,19 @@
+vpc_name: "vpro1-vpc"
+
+#cidr range
+vpcCidr: '172.10.0.0/16'
+
+#subnet
+
+pubSubCidr1: '172.10.1.0/24'
+pubSubCidr2: '172.10.2.0/24'
+pubSubCidr3: '172.10.3.0/24'
+priSubCidr1: '172.10.10.0/24'
+priSubCidr2: '172.10.11.0/24'
+priSubCidr3: '172.10.12.0/24'
+
+region: "eu-north-1"
+
+zone1: :eu-north-1a"
+zone2: :eu-north-1b"
+zone3: :eu-north-1c"
