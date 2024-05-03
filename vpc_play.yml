@@ -96,8 +96,7 @@
         wait: yes
         region: "{{ region }}"
         if_exist_do_not_create: true
-        tags:
-          Name: vpro_Nat
+        
       register: vpro_Nat
 
     - name: Set up private subnet route table
