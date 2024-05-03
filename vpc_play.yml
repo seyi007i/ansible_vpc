@@ -105,8 +105,7 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
-        tags:
-          Name: vpro_privateRT
+        
         subnets:
           - "{{ vpro_pri1.subnet.id }}"
           - "{{ vpro_pri2.subnet.id }}"
