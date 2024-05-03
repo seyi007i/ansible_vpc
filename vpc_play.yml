@@ -62,4 +62,56 @@
         state: "{{state}}"
         tags:
           Name: vpro_pri2
-      register: vpro_pri2    
+      register: vpro_pri2 
+
+    - name: Create igw
+      ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: present
+        tags:
+          Name: vpro_igw
+      register: vpro_igw   
+
+    - name: Set up public subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+          Name: vpro_PublicRT
+        subnets:
+          - "{{ vpro_pub1.subnet.id }}"
+          - "{{ vpro_pub2.subnet.id }}"
+          
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ vpro_igw.gateway_id }}"
+      register: public_route_table
+
+    - name: creat a nat gateway and allocate new EIP if nat does not exist
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        subnet_id: vpro_pub1.subnet.id
+        wait: yes
+        region: "{{ region }}"
+        if_exist_do_not_create: true
+        tags:
+          Name: vpro_Nat
+      register: vpro_Nat
+
+    - name: Set up private subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+          Name: vpro_privateRT
+        subnets:
+          - "{{ vpro_pri1.subnet.id }}"
+          - "{{ vpro_pri2.subnet.id }}"
+          
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ vpro_Nat.gateway_id }}"
+      register: private_route_table
