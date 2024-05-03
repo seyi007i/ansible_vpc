@@ -104,12 +104,13 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
-        
+        tags:
+          Name: vpro_private
         subnets:
           - "{{ vpro_pri1.subnet.id }}"
           - "{{ vpro_pri2.subnet.id }}"
           
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{ vpro_Nat.gateway_id }}"
+            gateway_id: "{{ vpro_Nat.nat_gateway_id }}"
       register: private_route_table
