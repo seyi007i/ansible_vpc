@@ -92,7 +92,7 @@
     - name: creat a nat gateway and allocate new EIP if nat does not exist
       ec2_vpc_nat_gateway:
         state: "{{state}}"
-        subnet_id: vpro_pub1.subnet.id
+        subnet_id: "{{vpro_pub1.subnet.id}}"
         wait: yes
         region: "{{ region }}"
         if_exist_do_not_create: true
